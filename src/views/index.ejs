@@ -1,0 +1,24 @@
+<head>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {
+            lat: <%= process.env.LATITUDE %>,
+            lng: <%= process.env.LONGITUDE %>},
+          zoom: 16,
+          mapTypeId: 'satellite',
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.GOOGLE_MAPS_KEY %>&callback=initMap"
+    async defer></script>
+</head>
+
+<h3 id="title">
+  AAV Navigation Tool
+</h3>
+<div id='map'>
+  <!-- Purposely Empty -->
+</div>
