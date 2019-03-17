@@ -1,4 +1,5 @@
 var map;
+var markers
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('running script.js');
@@ -22,5 +23,13 @@ function initMap() {
         center: {lat: LATITUDE, lng: LONGITUDE},
         zoom: 16,
         mapTypeId: 'satellite',
+        disableDoubleClickZoom: true,
       });
+
+    google.maps.event.addListener(map, 'dblclick', function(event) {
+        var lat = event.latLng.lat();
+        var lng = event.latLng.lng();
+        alert('Lat: ' + lat + '\nLong: ' + lng);
+    });
 }
+
