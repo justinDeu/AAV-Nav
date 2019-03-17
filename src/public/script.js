@@ -1,9 +1,5 @@
 var map;
 
-/*const API_KEY = 'AIzaSyB4xyZX5ig0iAYhR1kTT4Ux5Fv-GyXf3DQ';
-const LATITUDE = 38.14467800;
-const LONGITUDE = -76.42799500;*/
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log('running script.js');
     if (document.querySelectorAll('#map').length > 0) {
