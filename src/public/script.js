@@ -1,5 +1,5 @@
 var map;
-var markers
+var markers = [];
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('running script.js');
@@ -29,7 +29,15 @@ function initMap() {
     google.maps.event.addListener(map, 'dblclick', function(event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
-        alert('Lat: ' + lat + '\nLong: ' + lng);
+
+        var marker = new google.maps.Marker({
+            position: event.latLng,
+            map: map,
+            title: markers.length.toString(),
+        })
+
+        markers.push(marker);
+
     });
 }
 
