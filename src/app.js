@@ -3,6 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+// The port to run on, if using docker-compose, must match the mapped port
+const PORT = 8000;
+
 // Setting up the server
 const app = express();
 
@@ -12,6 +15,6 @@ app.set('view engine', 'ejs');
 
 require('./routes')(app);
 
-app.listen(3000, () => {
-    console.log('Listening on port 3000');
+app.listen(PORT, () => {
+    console.log('Listening on port ' + PORT);
 });
