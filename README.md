@@ -1,125 +1,32 @@
+# AAV Navigation Tool
 
-Node + Create React App + Docker Compose
-========================================
+## Overview
 
-A project that runs a Node server and a create-react-app app via two separate containers, using Docker Compose.
+This is the tool that Virginia Tech's Autonomous Aeriel Vehicles (AAV) Design Team will use at the AUVSI SUAS competition. It uses Google Maps API to display a location through a webservice. This is developed through an express.
 
+The tool allows for the user to import a properly formatted `.waypoints` file (following the standard used by mavProxy) to create the initial points that __cannot__ be modified. This points are drawn in orange. A `.obs` file can also be uploaded to visualize the obstacles on the course. This is a custom file format that is described further down. The tool then provides the functionality to add additional waypoints to the course (displayed in green) to avoid collisions with obstacles. The tool can generate a new `.waypoints` file that contains these modifications.
 
-## Development
+## Installation - NOT FINISHED 
+1. Install Docker
+2. Request access to Google API's if you don't already have access.
+3. Clone the Repository
 
-```
-docker-compose up
-```
+6. Open a terminal at the repsitory's root folder and run: `docker-compose up`
+7. In a browser, go to `localhost:3000`
 
-For development, the `server/` and `client/` directories have their own docker containers, which are configured via the `docker-compose.yml` file.
+## TO-DO
+In no order as of yet:
 
-The client server is spun up at `localhost:3000` and it proxies internally to the server using the linked name as `server:8080`.
-
-The local directories are mounted into the containers, so changes will reflect immediately. However, changes to package.json will likely need to a rebuild: `docker-compose down && docker-compose build && docker-compose up`.
-
-### Notes
-
-#### Adding new scss files
-
-The `node-sass` watch feature does not notice new files. In order to get new files working, restart the client container:
-
-```
-docker-compose restart client
-```
-
-#### Installing npm dependencies
-
-All changes to `node_modules` should happen *inside* the containers. Install any new dependencies by inside the container. You can do this via `docker-compose run`, but it’s easier to just upadte a running container and avoid having to rebuild everything:
-
-```
-docker-compose exec client
-```
-
-Then inside:
-
-```
-npm install --save <new_dependency>
-```
-
-## Production
-
-```
-docker-compose -f docker-compose.prod.yml up
-```
-
-For production, this uses the Dockerfile at the root of the repo. It creates a static build of the client React app and runs Express inside server, which handles both the API and serving of React files.
-
-As a result, different code is executing to serve the React files, but all of the API calls should remain the same. The difference between development and production isn’t ideal, but it does offer the simplicity of having the entire app run in one server on one machine.
-
-This is one of multiple ways a Node + React app could be setup, as suggested [here](https://daveceddia.com/create-react-app-express-production/):
-
-*   __Keep them together__ - have Express serve both the API and React files
-*   __Split them apart__ - have Express API on one machine and the React files on another (e.g., on S3 and use CORS to access the API)
-*   __Put the API behind a proxy__ - use something like NGINX to proxy the Express API server and React static files separately
-
-This project uses the “keep them together” approach. For better performance, you can set up a proxy (like Cloudflare) in between your server and the Internet to cache the static files. Or with some extra work you can fashion it to do either of the other two options.
-
-
-## Notes
-
-### Using docker compose
-
-I have `comp` aliased to `docker-compose` on my computer.
-
-Start via:
-
-```
-comp up
-
-# or detached
-comp up -d
-```
-
-Run a container of the server image via:
-
-```
-comp run server /bin/bash
-```
-
-Check status:
-
-```
-comp ps
-```
-
-Stop:
-
-```
-comp down
-```
-
-Run the production image:
-
-```
-comp -f docker-compose.prod.yml up
-```
-
-NOTE: if any dependencies change in package.json files, you probably will need to rebuild the container for the changes to appear, e.g.,
-
-```
-comp down
-comp build
-comp up
-```
-
-
-### Setup references
-
-References for setting up a Node project with Docker and docker-compose:
-
-*   https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
-*   https://blog.codeship.com/using-docker-compose-for-nodejs-development/
-*   http://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html
-
-Express + React:
-
-*   https://daveceddia.com/create-react-app-express-production/
-*   http://ericsowell.com/blog/2017/5/16/create-react-app-and-express
-*   https://medium.freecodecamp.org/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0
-*   https://medium.freecodecamp.org/how-to-host-a-website-on-s3-without-getting-lost-in-the-sea-e2b82aa6cd38
-
+* Add listeners to alert of a mouse click on the map
+* Decide on how the user will go about adding a point
+* Research Linked List implementation in a database
+* Connect the app to a database
+* Convert Waypoint parser to javascript
+* Convert Waypoint writer to javascript
+* Create a standard `.obs` format
+* Write a `.obs` parser
+* Formalize `README.MD`: add images, add links, write more!
+* Display database on page
+* Implement partials into the website design
+* Draft final layout of website
+* Connect Buttons to backend
