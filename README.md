@@ -7,15 +7,15 @@ This is the tool that Virginia Tech's Autonomous Aeriel Vehicles (AAV) Design Te
 The tool allows for the user to import a properly formatted `.waypoints` file (following the standard used by mavProxy) to create the initial points that __cannot__ be modified. This points are drawn in orange. A `.obs` file can also be uploaded to visualize the obstacles on the course. This is a custom file format that is described further down. The tool then provides the functionality to add additional waypoints to the course (displayed in green) to avoid collisions with obstacles. The tool can generate a new `.waypoints` file that contains these modifications.
 
 ## Installation 
-1. Install Docker Desktop
-* [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/install/ "DD for Windows link")
-* [Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install/ "DD for Mac link")
+1. Install Docker Desktop:
+   * [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/install/ "DD for Windows link")
+   * [Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install/ "DD for Mac link")
 2. Request access to Google API's if you don't already have access.
-* [Google API Sign-Up](https://developers.google.com/maps/documentation/javascript/get-api-key "API Key Link")
-3. Clone the Repository
-* `git clone https://github.com/justinDeu/AAV-Nav.git`
-6. Open a terminal at the repsitory's root folder and run: `docker-compose up`
-7. In a browser, go to [localhost:3000](http://localhost:3000) to see the homepage
+   * [Google API Sign-Up](https://developers.google.com/maps/documentation/javascript/get-api-key "API Key Link")
+3. Clone the Repository:
+   * `git clone https://github.com/justinDeu/AAV-Nav.git`
+4. Open a terminal at the repsitory's root folder and run: `docker-compose up`
+5. In a browser, go to [localhost:3000](http://localhost:3000) to see the homepage
 
 ## Using the Tools
 1. Start the application by navigating to the root directory of the project and running `docker-compose up`
