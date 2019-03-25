@@ -2,6 +2,7 @@
 
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 // Constants
 const PORT = process.env.PORT || 8080;
@@ -14,15 +15,12 @@ const app = express();
 
 // Static files
 app.use(express.static(CLIENT_BUILD_PATH));
+app.use(bodyParser.json())
+
+// 
 
 // API
-app.get('/api', (req, res) => {
-  res.set('Content-Type', 'application/json');
-  let data = {
-    message: 'Hello world, Woooooeeeee!!!!'
-  };
-  res.send(JSON.stringify(data, null, 2));
-});
+require('./routes')(app);
 
 // All remaining requests return the React app, so it can handle routing.
 app.get('*', function(request, response) {
