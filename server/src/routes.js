@@ -72,10 +72,19 @@ module.exports = function(app) {
       });
 
       /**
-       * 
+       * Attempts to delete the point at the given index. Fails if the index is out of bounds or if
+       * the point of type Waypoint (cannot be deleted)
        */
       app.delete('/api/arr/:index', (req, res) => {
 
+        const {index} = req.params;
+        console.log(typeof(points[index]));
+        if (index < points.length && index >= 0 && !(points[index] instanceof Waypoint)) {
+          const removed = points.splice(index, 1);
+          res.status(202).send(removed);
+        } else {
+          res.status(412).send('Error occurred');
+        }
       });
 
       /**
