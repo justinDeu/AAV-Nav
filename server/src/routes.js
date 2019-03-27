@@ -81,13 +81,23 @@ module.exports = function(app) {
       /**
        * Loads the given json array as Waypoints into the array. Should be called when the 
        * file is provided to create the points that are necessary to visit.
+       * 
+       * req.body (json):
+       *    {
+       *      "latLongs": [
+       *        {"lat": x1, "long": y1, "height": z1},
+       *        {"lat": x2, "long": y2, "height": z2},
+       *        {"lat": x3, "long": y3, "height": z3},
+       *        {"lat": x4, "long": y4, "height": z4}
+       *      ]
+       *    }
        */
       app.post('/api/arr/load', (req, res) => {
 
         const {latLongs} = req.body;
 
           for (i in latLongs) {
-            
+
             const lat = latLongs[i].lat;
             const long = latLongs[i].long;
             const height = latLongs[i].height;
@@ -96,6 +106,6 @@ module.exports = function(app) {
             points.push(wp);
           }
 
-          res.send(points);
+          res.status(201).send(points);
       });
 }
