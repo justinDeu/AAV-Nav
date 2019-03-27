@@ -35,6 +35,8 @@ module.exports = function(app) {
        */
       app.post('/api/arr', (req, res) => {
 
+        console.log('Trying to post in /api/arr');
+
         // Reading the variables from the request body 
         const { lat } = req.body;
         const { long } = req.body;
@@ -43,6 +45,7 @@ module.exports = function(app) {
 
         const point = new NavigationPoint(lat, long, height);
 
+        // Adding in the new point and sending the points back
         points.splice(index, 0, point);
         res.status(201).send(points);
       });
@@ -68,7 +71,31 @@ module.exports = function(app) {
         }
       });
 
-      app.delete('/api/arr/:pointLocaiton', (req, res) => {
+      /**
+       * 
+       */
+      app.delete('/api/arr/:index', (req, res) => {
 
+      });
+
+      /**
+       * Loads the given json array as Waypoints into the array. Should be called when the 
+       * file is provided to create the points that are necessary to visit.
+       */
+      app.post('/api/arr/load', (req, res) => {
+
+        const {latLongs} = req.body;
+
+          for (i in latLongs) {
+            
+            const lat = latLongs[i].lat;
+            const long = latLongs[i].long;
+            const height = latLongs[i].height;
+
+            let wp = new Waypoint(lat, long, height);
+            points.push(wp);
+          }
+
+          res.send(points);
       });
 }
