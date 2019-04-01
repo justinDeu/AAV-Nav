@@ -57,7 +57,26 @@ describe('GET /api/arr', () => {
 });
 
 describe('POST /api/arr', () => {
-     
+
+     it('should return 201 with proper data', async () => {
+        const res = await addPoint({
+            lat: 2,
+            long: 22,
+            height: 222,
+            index: 0
+        });
+
+        const body = res.body;
+        expect(body.length).to.equal(3);
+        expect(body[0].lat).to.equal(2);
+        expect(body[0].long).to.equal(22);
+        expect(body[0].height).to.equal(222);
+
+        // Need a method to demonstrate that is navigation point
+    });
+
+
+
 });
 
 
