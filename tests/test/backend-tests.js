@@ -56,18 +56,15 @@ describe('/api', () => {
             expect(body.height, 'should have a height').to.equal(111);
 
         });
-
-
-
     });
 
     describe('POST /api/arr', () => {
-
+        // no testing implemented yet
     });
 
 
     describe('DELETE /api/arr', () => {
-
+        // no testing implemented yet
     });
 });
 
