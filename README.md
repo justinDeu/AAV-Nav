@@ -23,6 +23,16 @@ The tool allows for the user to import a properly formatted `.waypoints` file (f
 
 The rest of this section has not been created yet.
 
+## Testing the Backend
+The backend api can be tested using mocha in conjunction with chai. The tests are contained within `tests/test/backend-tests.js`. To run the tests, execute the docker-compose test file with the following command:
+
+`docker-compose -f docker-compose.test.yml up --exit-code-from tests`
+
+This will start the api backend as well as another container to run tests against the api. Once the tests are completed, the results will be displayed in the console, and both containers will be stopped. 
+
+#### Adding your own tests
+To add your own tests, follow the standard used by mocha and chai. Most likely, this will involve defining more `describe` and `it` statements within the `backend-tests.js` file. 
+
 ## TO-DO
 In no order as of yet:
 

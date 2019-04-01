@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  api:
+    image: api
+    build: ./server/
+    ports:
+      - 8080:8080
+
+  tests:
+    image: tests
+    build: ./tests/
+    depends_on:
+      - api
+    volumes:
+      - ./tests/test:/app/test
+    command: yarn --cwd ./tests start
