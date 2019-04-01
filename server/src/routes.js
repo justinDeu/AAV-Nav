@@ -35,19 +35,21 @@ module.exports = function(app) {
        */
       app.post('/api/arr', (req, res) => {
 
-        console.log('Trying to post in /api/arr');
+        try {
+          // Reading the variables from the request body 
+          const { lat } = req.body;
+          const { long } = req.body;
+          const { height } = req.body;
+          const { index } = req.body;
+          const point = new NavigationPoint(lat, long, height);
+  
+          // Adding in the new point and sending the points back
+          points.splice(index, 0, point);
+          res.status(201).send(points);
 
-        // Reading the variables from the request body 
-        const { lat } = req.body;
-        const { long } = req.body;
-        const { height } = req.body;
-        const { index } = req.body;
-
-        const point = new NavigationPoint(lat, long, height);
-
-        // Adding in the new point and sending the points back
-        points.splice(index, 0, point);
-        res.status(201).send(points);
+        } catch (err) {
+          res.status(404).send('Body missing required field');
+        }
       });
       
       /**
@@ -64,7 +66,7 @@ module.exports = function(app) {
             if (index < points.length && index >= 0) {
                 res.send(points[index]);
             } else {
-                res.send('invalid index, too big');
+              res.status(404).send('Given index out of range: ' + index);
             }
         } else {
             res.send(points);
@@ -78,7 +80,6 @@ module.exports = function(app) {
       app.delete('/api/arr/:index', (req, res) => {
 
         const {index} = req.params;
-        console.log(typeof(points[index]));
         if (index < points.length && index >= 0 && !(points[index] instanceof Waypoint)) {
           const removed = points.splice(index, 1);
           res.status(202).send(removed);
