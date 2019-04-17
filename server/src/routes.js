@@ -77,15 +77,22 @@ module.exports = function(app) {
        * Attempts to delete the point at the given index. Fails if the index is out of bounds or if
        * the point of type Waypoint (cannot be deleted)
        */
-      app.delete('/api/points/:index', (req, res) => {
+      app.delete('/api/points/:uuid', (req, res) => {
 
-        const { index } = req.params;
+        const { uuid } = req.params;
+        const loc = locateID(uuid);
 
-        if (index < points.length && index >= 0 && !(points[index] instanceof Waypoint)) {
-          const removed = points.splice(index, 1);
-          res.status(202).send(removed);
+        if (loc == -1) {
+            res.status(404).send ("No point containing UUID: " + req.params.uuid);
         } else {
-          res.status(412).send('Error occurred');
+            const point = points[loc];
+
+            if (point.type == "Waypoint") {
+                res.status(403).send("Deleting Waypoints is not allowed");
+            } else {
+                const removed = points.splice(loc, 1);
+                res.status(202).send(removed);
+            }
         }
       });
 
@@ -106,6 +113,7 @@ module.exports = function(app) {
       app.post('/api/points/load', (req, res) => {
 
         const {latLongs} = req.body;
+        points = [];
 
           for (i in latLongs) {
 
