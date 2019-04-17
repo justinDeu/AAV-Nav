@@ -50,6 +50,13 @@ module.exports = function(app) {
           res.status(404).send('Body missing required field');
         }
       });
+
+      /**
+       * Sends back all points
+       */
+      app.get('/api/points', (req, res) => {
+        res.send(points);
+      });
       
       /**
        * Returns the array of points that are currently stored.
