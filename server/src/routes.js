@@ -29,7 +29,7 @@ module.exports = function(app) {
 	     *      "lat": x,
 	     *      "lng": y,
 	     *      "height": z,
-	     *      "index": w
+	     *      "before": w
        *    }
        */
       app.post('/api/points', (req, res) => {
@@ -39,13 +39,18 @@ module.exports = function(app) {
           const { lat } = req.body;
           const { lng } = req.body;
           const { height } = req.body;
-          const { index } = req.body;
+          const { before } = req.body;
           const point = new NavigationPoint(lat, lng, height);
-  
-          // Adding in the new point and sending the points back
-          points.splice(index, 0, point);
-          res.status(201).send(points);
 
+          const loc = locateID(before);
+          
+          if (loc == -1 ) {
+              res.status(404).send("Could not find point to insert after with UUID: " + after);
+          } else {
+            // Adding in the new point and sending the points back
+            points.splice(loc, 0, point);
+            res.status(201).send(point);
+          }
         } catch (err) {
           res.status(404).send('Body missing required field');
         }
