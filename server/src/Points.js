@@ -1,61 +1,26 @@
 class Point {
-    constructor(lat, long, height) {
+    constructor(lat, lng, height, type) {
         this.lat = lat;
-        this.long = long;
+        this.lng = lng;
         this.height = height;
-    }
-/* 
-    get lat() {
-        return this._lat;
+        this.type = type;
     }
 
-    set lat(value) {
-        this._lat = value;
-    }
-
-    get long() {
-        return this._long;
-    }
-
-    set long(value) {
-        this._long = value;
-    }
-
-    get height() {
-        return this._height;
-    }
-
-    set height(value) {
-        this._height = value;
-    } */
-
-    dataString() {
-        return ("lat: " + this.lat + " long: " + this.long + " height: " + this.height);
+    toString() {
+        return ("[" + this.type + "] lat: " + this.lat + " lng: "
+            + this.lng + "  height: " + this.height);
     }
 }
 
 class Waypoint extends Point {
-
-    constructor(lat, long, height) {
-        super(lat, long, height);
-        this.lat = lat;
-        this.long = long;
-        this.height = height;
+    constructor(lat, lng, height) {
+        super(lat, lng, height, "Waypoint");
     }
-
-    toString() {
-        return ("[Waypoint] " + super.dataString());
-    }
-
 }
 
 class NavigationPoint extends Point {
-    constructor(lat, long, height) {
-        super(lat, long, height);
-    }
-
-    toString() {
-        return ("[NavigationPoint] " + super.dataString());
+    constructor(lat, lng, height) {
+        super(lat, lng, height, "Navigation");
     }
 }
 

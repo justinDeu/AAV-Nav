@@ -1,4 +1,3 @@
-
 // Bringing in the points
 const {NavigationPoint} = require('./Points');
 const {Waypoint} = require('./Points');
@@ -23,25 +22,25 @@ module.exports = function(app) {
       
       /**
        * Adds a Navigation point to the array when a post request is sent to the 
-       * '/api/arr' endpoint 
+       * '/api/points' endpoint 
        * 
        * request body (json):
        *    {
 	     *      "lat": x,
-	     *      "long": y,
+	     *      "lng": y,
 	     *      "height": z,
 	     *      "index": w
        *    }
        */
-      app.post('/api/arr', (req, res) => {
+      app.post('/api/points', (req, res) => {
 
         try {
           // Reading the variables from the request body 
           const { lat } = req.body;
-          const { long } = req.body;
+          const { lng } = req.body;
           const { height } = req.body;
           const { index } = req.body;
-          const point = new NavigationPoint(lat, long, height);
+          const point = new NavigationPoint(lat, lng, height);
   
           // Adding in the new point and sending the points back
           points.splice(index, 0, point);
@@ -58,28 +57,23 @@ module.exports = function(app) {
        * at that index is returned
        * 
        */
-      app.get('/api/arr/', (req, res) => {
+      app.get('/api/points/:id', (req, res) => {
 
-        const { index } = req.query;
+        const { id } = req.param;
 
-        if (index) {
-            if (index < points.length && index >= 0) {
-                res.send(points[index]);
-            } else {
-              res.status(404).send('Given index out of range: ' + index);
-            }
-        } else {
-            res.send(points);
-        }
+        // write function to return item with given id 
+
+        res.send('Not yet implemented, but you wanted id: ' + id);
       });
 
       /**
        * Attempts to delete the point at the given index. Fails if the index is out of bounds or if
        * the point of type Waypoint (cannot be deleted)
        */
-      app.delete('/api/arr/:index', (req, res) => {
+      app.delete('/api/points/:index', (req, res) => {
 
-        const {index} = req.params;
+        const { index } = req.params;
+
         if (index < points.length && index >= 0 && !(points[index] instanceof Waypoint)) {
           const removed = points.splice(index, 1);
           res.status(202).send(removed);
@@ -95,24 +89,24 @@ module.exports = function(app) {
        * req.body (json):
        *    {
        *      "latLongs": [
-       *        {"lat": x1, "long": y1, "height": z1},
-       *        {"lat": x2, "long": y2, "height": z2},
-       *        {"lat": x3, "long": y3, "height": z3},
-       *        {"lat": x4, "long": y4, "height": z4}
+       *        {"lat": x1, "lng": y1, "height": z1},
+       *        {"lat": x2, "lng": y2, "height": z2},
+       *        {"lat": x3, "lng": y3, "height": z3},
+       *        {"lat": x4, "lng": y4, "height": z4}
        *      ]
        *    }
        */
-      app.post('/api/arr/load', (req, res) => {
+      app.post('/api/points/load', (req, res) => {
 
         const {latLongs} = req.body;
 
           for (i in latLongs) {
 
             const lat = latLongs[i].lat;
-            const long = latLongs[i].long;
+            const lng = latLongs[i].lng;
             const height = latLongs[i].height;
 
-            let wp = new Waypoint(lat, long, height);
+            let wp = new Waypoint(lat, lng, height);
             points.push(wp);
           }
 
