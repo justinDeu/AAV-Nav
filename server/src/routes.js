@@ -59,18 +59,18 @@ module.exports = function(app) {
       });
       
       /**
-       * Returns the array of points that are currently stored.
-       * If a query variable named index is included, the point
-       * at that index is returned
-       * 
+       * Returns the point with the given UUID or a 404 not found
        */
-      app.get('/api/points/:id', (req, res) => {
+      app.get('/api/points/:uuid', (req, res) => {
 
-        const { id } = req.param;
+        const loc = locateID(req.params.uuid);
 
-        // write function to return item with given id 
+        if (loc == -1) {
+            res.status(404).send ("No point containing UUID: " + req.params.uuid);
+        } else {
+            res.send(points[loc]);
+        }
 
-        res.send('Not yet implemented, but you wanted id: ' + id);
       });
 
       /**
@@ -119,4 +119,23 @@ module.exports = function(app) {
 
           res.status(201).send(points);
       });
+}
+
+
+/**
+ * linearly searches the list of points for the given uuid
+ * 
+ * @param   id  the uuid to search for 
+ * @return      the index of the matching uuid or -1
+ * 
+ */
+function locateID(uuid) {
+
+    for (i = 0; i < points.length; i++) {
+        if (points[i].uuid == uuid) {
+            return i;
+        }
+    }
+
+    return -1;
 }
