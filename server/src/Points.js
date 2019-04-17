@@ -1,9 +1,12 @@
+const uuidv4 = require('uuid/v4');
+
 class Point {
     constructor(lat, lng, height, type) {
         this.lat = lat;
         this.lng = lng;
         this.height = height;
         this.type = type;
+        this.uuid = uuidv4();
     }
 
     toString() {

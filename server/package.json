@@ -10,7 +10,8 @@
   "author": "Peter Coles",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "nodemon": "^1.14.7"
